@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.shoe.platform.model.DetalleOrden;
 import com.shoe.platform.model.Orden;
 import com.shoe.platform.model.Producto;
+import com.shoe.platform.model.Usuario;
+import com.shoe.platform.service.IUsuarioService;
 import com.shoe.platform.service.ProductoService;
 
 @Controller
@@ -28,6 +30,9 @@ public class HomeController {
 	
 	@Autowired
 	private ProductoService productoService;
+	
+	@Autowired
+	private IUsuarioService iUsuarioService; 
 	
 	//Almacena los detalles de la orden
 	List<DetalleOrden> detalles = new ArrayList<DetalleOrden>();
@@ -118,7 +123,14 @@ public class HomeController {
 		}
 		
 		@GetMapping("/order")
-		public String order() {
+		public String order(Model model) {
+			
+			Usuario usuario = iUsuarioService.findById(1).get();
+			
+			model.addAttribute("cart", detalles);
+			model.addAttribute("orden", orden);
+			model.addAttribute("usuario", usuario);
+			
 			return "usuario/resumenorden";
 		}
 }
