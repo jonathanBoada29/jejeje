@@ -52,8 +52,6 @@ public class ProductoController {
 		if (producto.getId()==null) {
 			String nombreImagen=upload.saveImage(file);
 			producto.setImagen(nombreImagen);	
-		} else {
-			
 		}
 		
 		productoService.save(producto);
